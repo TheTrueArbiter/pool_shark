@@ -1,0 +1,4 @@
+enum EliminationType {
+  single, 
+  double
+}

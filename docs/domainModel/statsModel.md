@@ -47,6 +47,7 @@ classDiagram
         getTotalBreaks() int 
         getWetBreaks() int 
         getDryBreaks() int 
+        getFoulBreaks() int
 
         getWetBreakPercent() double
         getDryBreakPercent() double 
@@ -133,7 +134,7 @@ classDiagram
         int fouls 
         int safeties 
 
-        GameType gameType
+        const GameType gameType
         Outcome gameResult 
         BreakResult breakResult
         boolean isBnr

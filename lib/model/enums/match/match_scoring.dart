@@ -1,0 +1,4 @@
+enum MatchScoring {
+  scoring, 
+  wins 
+}
