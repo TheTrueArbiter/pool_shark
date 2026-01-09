@@ -1,0 +1,249 @@
+```
+classDiagram
+  Tournment *-- TournementSettings : Composition
+  Tournment *-- RoundRobinPhase : Composition
+  Tournment *-- KnockOutPhase : Composition
+  Tournment *-- Team : Composition
+
+  Group *-- Scoreboard : Composition
+
+  KnockOutPhase *-- Bracket : Composition
+
+  Bracket *-- MatchNode : Composition(Inner Class)
+  Bracket *-- Edge : Composition(Inner Class)
+  Bracket *-- Match : Composition
+    
+
+  Scoreboard *-- ScoreboardEntry : Composition
+
+  RoundRobinPhase *-- Group : Composition
+
+    class TournementSettings {
+        GameType gameType
+        MatchType matchType
+        MatchScoring matchScoring
+        BreakingFormat breakingFormat
+        EliminationType eliminationType
+        boolean isHandicap
+        boolean isRoundRobin
+        boolean isSeeded
+        int numOfTables
+        int teamLimit
+        int teamSizeLimit
+        int teamSizeMin
+        int[] winsPerRound
+        int prizeMoneyDollars
+        
+        getMatchType() MatchType 
+        getMatchScoring() matchScoring
+        getBreakingFormat() BreakingFormat 
+        getEliminationType() EliminationType 
+        getIsHandiCap() Boolean 
+        getIsRoundRobin() Boolean 
+        getIsSeeded() Boolean 
+        getTeamLimit() int
+        getTeamSizeLimit() int 
+        getTeamSizeMin() int 
+        getWinsPerRound() int[] 
+        getWinsForRound(int round) int
+        getPrizeMoneyDollars() double
+    }
+
+    note for TournementSettings "Invariant properties:
+        gameType != null
+        matchType != null 
+        matchScoring != null
+        breakingFormat != null 
+        eliminationType != null 
+        numOfTables >= 1
+        teamLimit >= 4 OR teamLimit = -1    // -1 for no limit
+        teamSizeLimit >= 1 && teamSizeLimit <= 10
+        teamSizeMin >= 1 && teamSizeMin <= teamSizeLimit 
+        winsPerRound != null 
+        each element in winsPerRound >= 1 
+        prizeMoneyDollars >= 0
+    "
+
+    class Tournment {
+        String name
+        UserProfile organizer
+        List<Team> teams
+        TournementSettings settings
+        RoundRobinPhase roundRobin
+        KnockOutPhase knockOut
+
+        getName() String 
+        getTeams() List<Team>
+        getTeam(String name) Team 
+        getSettings() TournementSettings
+        getRoundRobinPhase() RoundRobinPhase
+        getKnockOutPhase() KnockOutPhase
+
+        getWinner() Team 
+    }
+
+    note for Tournment "Invariant properties:
+        name != null 
+        name.length >= 1 
+        organizer != null 
+        teams != null 
+        teams.size >= 3
+        for each Team in teams != null
+        settings != null 
+        roundRobin != null 
+        KnockOutPhase != null
+    "
+
+
+    class RoundRobinPhase {
+        int numOfGroups
+        int teamsToAdvace 
+        int matchesPerTeam
+
+        List<Group> groups
+
+        boolean isComplete
+
+        generateMatches() void
+
+        getAdvancingTeams() Map<Team <Group, Rank>>
+        getGroups() List<Group>
+        getGroup(String groupName) Group 
+        getGroup(int index) Group
+        getMatchesForTeam(Team team) list<Match>
+    } 
+
+    note for RoundRobinPhase "Invariant properties:
+        numOfGroups >= 1
+        teamsToAdvace >= 1 
+        matchesPerTeam >= 1 
+        groups != null 
+        each Group in groups != null 
+        groups.size == numOfGroups
+    "
+
+    class KnockOutPhase {
+        boolean isSeeded
+        Bracket bracket 
+        List<Team> teams
+        Map<Team, int> teamPlacement        // the round a team made it too
+        boolean isFinshed
+        
+        generateBracket() void
+        getActiveMatches() List<Match>
+        getMatches() List<Match>
+    }
+
+    note for KnockOutPhase "Invariant properties:
+        bracket != null
+        teams != null
+        for each Team in teams != null 
+        teamPlacement != null 
+        each Team in teams is a key in teamPlacement 
+    "
+
+    class Bracket { 
+        List<Match> matches
+
+        getActiveMatches() list<Match>
+        getMatches() list<Match>
+        getFirstRoundMatches() list<Match>
+        getQuarterFinals() list<Match>
+        getSemiFinals() list<Match>
+    }
+
+    note for Bracket "Invariant properties:
+        matches != null 
+        for each Match in matches != null 
+    "
+
+    class MatchNode {
+        Match match 
+        List<Edge> nextMatches 
+        List<Edge> incomingEdges
+        boolean isFinshed
+    }
+
+
+
+    class Edge {
+        MatchNode target 
+        boolean isWinnerEdge
+    }
+
+    class Group {
+        String name 
+        List<Team> teams 
+        List<Match> matches
+        Scoreboard scoreboard
+        boolean isComplete
+    
+        getName() String 
+        getTeams() List<Team>
+        getScoreboard() ScoreBoard
+    }
+
+    note for Group "Invariant properties:
+        name != null
+        name.lenght >= 1 
+        teams != null
+        teams.size >= 2 
+        for each Team in teams != null
+        matches != null
+        matches.size >= 1 
+        for each Match in matches != null 
+        scoreboard != null
+    "
+
+
+    class Scoreboard {
+        Map<Team ScoreBoardEntry> entries 
+
+        getStandings() List<ScoreBoardEntry>
+        recordMatchResult(Match match) void 
+        
+    }
+
+    note for Scoreboard "Invariant properties:
+        entries != null
+    "
+ 
+    class ScoreboardEntry {
+        Team team 
+
+        int matchesPlayed   
+        int matchesWon 
+        int matchesLost
+        int points
+    
+        boolean isDivisionWon
+        boolean isInKnockOut
+
+        getMatchesPlayed() int 
+        getMatchesWon() int  
+        getMatchesLost() int 
+        getPoints() int 
+        getTeam() Team
+        getIsDivisionWon() boolean 
+        getIsInKnockOut() boolean
+    } 
+    
+    note for ScoreboardEntry "Invariant properties:
+        team != null 
+        matchesPlayed >= 0
+        matchesWon >= 0 
+        matches Lost >= 0 
+        matchesPlayed == matchesWon + matchesLost
+        points >= 0
+    "
+
+    class Team {}
+     note for Team "See matchModel.md for more details"
+
+    class Match{}
+     note for Team "See matchModel.md for more details"
+
+  ``` 
+
+
+
