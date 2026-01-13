@@ -5,12 +5,15 @@
         DRY 
         FOUL
         NOT_BREAKING
+        NOT_TAKEN
     }
 
     class Outcome {
         <<Enum>>
         WIN 
         LOST 
+        DRAW
+        UNDECIDED
     }
 
     class GameType {

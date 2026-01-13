@@ -14,7 +14,7 @@ abstract class MultiGameShootingStats extends ShootingStats {
   double get safetyAverage;
 
   // Rates
-  double get breakAndRunRat;
+  double get breakAndRunRate;
 
   // General 
   int get breakAndRuns; 

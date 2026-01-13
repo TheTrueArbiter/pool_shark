@@ -1,4 +1,6 @@
 enum Outcome {
   win,
-  loss
+  loss,
+  draw,
+  undecided
 }

@@ -133,22 +133,38 @@ classDiagram
         int missed 
         int fouls 
         int safeties 
+        int totalShots
 
-        const GameType gameType
+        final GameType gameType
+        final TeamBreaking teamBreaking
+        
         Outcome gameResult 
         BreakResult breakResult
         boolean isBnr
 
-        updateBreakResult(BreakResult breakResult)
-        updateGameResult(gameResult)
-        updatePotted(int potted) void
-        updateMissed(int missed) void 
-        updateFouls(int fouls) void 
-        updateSafeties(int safeties) void
+        maxPottable() int
+
+        setBreakResult(BreakResult breakResult) void
+        setGameResult(gameResult) void
+        setPotted(int potted) void
+        setMissed(int missed) void 
+        setFouls(int fouls) void 
+        setSafeties(int safeties) void
+
+        getBreakResult() BreakResult 
+        getGameResult() gameResult 
+        getPotted() int 
+        getMissed() int  
+        getFouls() int  
+        getSafeties() int  
+
     }
 
     note for GameStats "Invariant properties:
         potted, missed, fouls, safeties >= 0
+        potted <= maxPottable();
+        totalShots >= 0 
+        totalShots = potted + missed + fouls + safeties
         breakResult != null
         gameResult != null
         potted <= maxPossibleToPot

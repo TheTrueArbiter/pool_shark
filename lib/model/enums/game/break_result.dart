@@ -2,5 +2,6 @@ enum BreakResult {
   wet,
   dry, 
   foul,
-  notBreaking
+  notBreaking,
+  notTaken
 }

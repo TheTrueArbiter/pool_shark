@@ -10,6 +10,7 @@ abstract class ShootingStats {
     int get missed;
     int get fouls; 
     int get safeties;
+    int get totalShots;
     
     // Shooting rates
     double get pottingRate;
