@@ -106,18 +106,28 @@ classDiagram
         int fouls 
         int safeties 
         
-        int totalBreaks 
         int wetBreaks 
         int dryBreaks 
         
-        int gamesPlayed
         int gamesWon 
         int gamesLost
         
         Outcome matchResult
 
         updateMatchStats(GameStats gameStats) void
-        updateMatchStats() void
+        
+        getPotted() int 
+        getMissed() int 
+        getFouls() int 
+        getSafeties() int
+        
+        getTotalBreaks() int 
+        getWetBreaks() int 
+        getDryBreaks() int 
+        
+        getGamesPlayed() int 
+        getGamesWon() int 
+        getGamesLost() int
     }
 
     note for MatchStats "Invariant properties:

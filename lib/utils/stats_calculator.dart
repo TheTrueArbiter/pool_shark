@@ -7,4 +7,11 @@ class StatsCalculator {
       : 100;
   }
 
+  static double getAverage(int x, int n) {
+    return n != 0 
+      ? double.parse((x / n).toStringAsFixed(decimalPlaces)) * 100
+      : 0;
+ 
+  }
+
 }

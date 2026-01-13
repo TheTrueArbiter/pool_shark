@@ -1,5 +1,4 @@
 /* 
-
 game_stats.dart 
 
 purpose: Hold stats for a single game of pool
@@ -8,6 +7,7 @@ Notes:
   1) (Dart newbie) non private instance variables will automatically have getters and 
      setters. final non private instance variables will only have getter
 */
+import 'package:pool_shark/model/constants/max_pottable.dart';
 import 'package:pool_shark/model/enums/game/break_result.dart';
 import 'package:pool_shark/model/enums/game_type.dart';
 import 'package:pool_shark/model/enums/outcome.dart';
@@ -17,9 +17,6 @@ import 'package:pool_shark/utils/stats_calculator.dart';
 
 
 final class GameStats implements ShootingStats {
-  final int eightBallMaxPottable = 8;
-  final int nineBallMaxPottable = 9;
-  final int tenBallMaxPottable = 10;
 
   int _potted = 0;
   int _missed = 0; 
@@ -70,21 +67,21 @@ final class GameStats implements ShootingStats {
   int _maxPottable() {
     switch (gameType) {
       case GameType.eightBall:
-        return eightBallMaxPottable;
+        return MaxPottable.eightBall;
       case GameType.nineBall:
-        return nineBallMaxPottable;
+        return MaxPottable.nineBall;
       case GameType.tenBall:
-        return tenBallMaxPottable;
+        return MaxPottable.tenBall;
     }
   }
 
   // Class invariant methods
 
   void checkInvariants() {
-    checkPotted(potted);
-    checkMissed(missed); 
-    checkFouls(fouls);
-    checkSafeties(safeties);
+    checkPotted(_potted);
+    checkMissed(_missed); 
+    checkFouls(_fouls);
+    checkSafeties(_safeties);
   }
 
   void checkPotted(int potted) {
@@ -133,5 +130,4 @@ final class GameStats implements ShootingStats {
   }
 
 }
-
 

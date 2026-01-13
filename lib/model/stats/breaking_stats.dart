@@ -12,10 +12,10 @@ abstract class BreakingStats {
   int get foulBreaks;
 
   // Breaking rates
-  int get wetBreakRate;
-  int get dryBreakRate;
-  int get foulBreakRate;
+  double get wetBreakRate;
+  double get dryBreakRate;
+  double get foulBreakRate;
 
   // Breaking averages 
-  double get pottedOnBreakAvg;
+  // double get pottedOnBreakAvg;
 }

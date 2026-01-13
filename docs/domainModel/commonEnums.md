@@ -12,7 +12,6 @@
         <<Enum>>
         WIN 
         LOST 
-        DRAW
         UNDECIDED
     }
 
