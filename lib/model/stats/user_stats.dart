@@ -15,16 +15,13 @@ final class UserStats {
   final ShootingStats shootingStats = ShootingStats(); 
   final BreakingStats breakingStats = BreakingStats();
 
-  // Outcome variables 
   int _gamesLost = 0;
   int _gamesWon = 0;
 
   int _matchesWon = 0;
   int _matchesLost = 0;
 
-  // Other
   int _breakAndRuns = 0;
-  double moneyWon = 0;
 
   UserStats() {
     checkInvariants();
@@ -36,20 +33,12 @@ final class UserStats {
     _checkNotNegative(_matchesWon, 'matchesLost');
     _checkNotNegative(_matchesLost, 'matchesLost');
     _checkNotNegative(_breakAndRuns, 'breakAndRuns');
-    _checkMoneyWon();
   }
 
   void _checkNotNegative(int value, String variableName) {
     assert(
       value > 0,
       'UserStats: $variableName cannot be negative. Value: $value'
-    );
-  }
-
-  void _checkMoneyWon() {
-    assert(
-      moneyWon > 0,
-      'ShootinStats: moneyWon cannot be negative. Value: $moneyWon'
     );
   }
 

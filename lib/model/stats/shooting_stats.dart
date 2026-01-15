@@ -13,7 +13,6 @@ final class ShootingStats {
   int _fouls = 0; 
   int _safeties = 0;
 
-
   ShootingStats() {
     _checkInvariants();
   }

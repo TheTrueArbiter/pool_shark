@@ -1,202 +1,164 @@
 ```
 classDiagram
-  UserStats ..|> MultiGameShootingStats : Implements
-  UserStats ..|> BreakingStats : Implements
+    UserStats *-- BreakingStats : Composition 
+    UserStats *-- ShootingStats : Composition 
 
-  Match *-- MatchStats : Composition
-  Game *-- GameStats : Composition
-  UserProfile *-- UserStats : Composition
+    Match *-- MatchStats : Composition
+    Game *-- GameStats : Composition
+    UserProfile *-- UserStats : Composition
 
-  MatchStats ..|> MultiGameShootingStats : Implements
-  MatchStats ..|> BreakingStats : Implements
-  MatchStats --> Outcome : Uses
+    MatchStats *-- BreakingStats : Composition 
+    MatchStats *-- ShootingStats: Composition 
+    MatchStats --> Outcome : Uses
 
-  GameStats --> BreakResult : Uses
-
-  ShootingStats <.. GameStats : Implements
-
-  MultiGameShootingStats --|> ShootingStats : Inherits 
-
+    GameStats *-- ShootingStats : Composition
+    GameStats --> BreakResult : Uses
+    GameStats --> Outcome: Uses
+    GameStats --> GameType: Uses
 
 
-      class ShootingStats {
-        int potted 
-        int missed 
-        int fouls 
-        int safeties
 
-        getPotted() int 
-        getMissed() int 
-        getFouls() int 
-        getSafeties() int
+
+
+    class ShootingStats {
+        int _potted 
+        int _missed 
+        int _fouls 
+        int _safeties
+
+        get potted() int 
+        get missed() int 
+        get fouls() int 
+        get safeties() int
+        get totalShots() int
         
-        getPottingRate() double  
-        getMissdedRate() double  
-        getFouldRate() double  
-        getSafetyRate() double 
+        get pottingRate() double  
+        get missdedRate() double  
+        get fouldRate() double  
+        get safetyRate() double 
+
+        addPotted() void 
+        addMissed() void 
+        addFouls() void 
+        addSafeties() void
     }
+
     note for ShootingStats "Invariant properties:
-        potted, missed, fouls, safeties >= 0
+        _potted, _missed, _fouls, _safeties >= 0
     "
 
-    class MultiGameShootingStats {
-        <<interface>>
-        getPottingAverage() double 
-        getMissedAverage() double 
-        getFoulAverage() double 
-        getSafeAverage() double
-        getBreakAndRunRate() double
-        getBreakAndRuns() int
-    }
-
-
     class BreakingStats {
-        int wetBreaks 
-        int dryBreaks 
-        int foulBreaks
+        int _wetBreaks 
+        int _dryBreaks 
+        int _foulBreaks
 
-        getTotalBreaks() int 
-        getWetBreaks() int 
-        getDryBreaks() int 
-        getFoulBreaks() int
+        get totalBreaks() int 
+        get wetBreaks() int 
+        get dryBreaks() int 
+        get foulBreaks() int
 
-        getWetBreakRate() double
-        getDryBreakRate() double 
-        getFoulBreakRate() double 
+        get wetBreakRate() double
+        get dryBreakRate() double 
+        get foulBreakRate() double 
+        
+        addWetBreaks() void 
+        addDryBreaks() void 
+        addFoulBreaks() void 
     } 
 
+    note for BreakingStats "Invariant properties:
+       _wetBreaks, _dryBreaks, _foulBreaks >= 0 
+    "
+
     class UserStats {
-        int potted 
-        int missed 
-        int fouls 
-        int safeties 
-        
-        int wetBreaks 
-        int dryBreaks 
-        int breakAndRuns
-        
-        int gamesWon 
-        int gamesLost
+        final ShootingStats shootingStats
+        final breakingStats breakingStats
 
-        int matchesWon
-        int matchesLost
+        int _gamesWon 
+        int _gamesLost
 
-        double moneyWon
+        int _matchesWon
+        int _matchesLost
+
+        int _breakAndRuns
+
+        get gamesPlayed() int 
+        get gameWon() int 
+        get gamesLost() int 
+        get gameWinRate() double
+
+        get matchesPlayed() int
+        get matchesWon() int
+        get matchesLost() int
+        get matchWinRate() double
 
         updateStats(MatchStats matchstats) void 
-
-        getGamesPlayed() int 
-        getGameWon() int 
-        getGamesLost() int 
-        getMatchesPlayed() int
-        getMatchesWon() int
-        getMatchesLost() int
         
-        getMoneyWon() double 
-        addMoneyWon(double winnings) void
+        
     }
 
     note for UserStats "Invariant properties:
-        potted, missed, fouls, safeties >= 0
-        totalBreaks, wetBreaks, dryBreaks >= 0
-        gamesPlayed, gamesWons, gamesLost >= 0
-        matchesPlayed, matchesWon, matchesLost >= 0
-        breakAndRuns >= 0
-        moneyWon >= 0
-        gamesPlayed = gamesWon + gamesLost 
-        matchesPlayed = matchesWon + matchesLost
+        gamesWons, gamesLost >= 0
+        matchesWon, matchesLost >= 0
+        _breakAndRuns >= 0
     "
 
     class MatchStats {
-        int potted 
-        int missed 
-        int fouls 
-        int safeties 
-        
-        int wetBreaks 
-        int dryBreaks 
-        
-        int gamesWon 
-        int gamesLost
-
-        int breakAndRuns
-        
+        final ShootingStats shootingStats
+        final BreakingStats breakingStats
+    
+        int _breakAndRuns
+        int _gamesWon
+        int _gamesLost
+    
         Outcome matchResult
 
         updateMatchStats(GameStats gameStats) void
+       
+        get gamesPlayed() int 
+        get gamesWon() int 
+        get gamesLost() int
+
+        get pottingAverage() double 
+        get missedAverage() double 
+        get foulAverage() double
+        get safetyAverage() double 
+
+        get breakAndRuns() int 
+        get breakAndRunRate() double
         
-        getPotted() int 
-        getMissed() int 
-        getFouls() int 
-        getSafeties() int
-        
-        getTotalBreaks() int 
-        getWetBreaks() int 
-        getDryBreaks() int 
-        
-        getGamesPlayed() int 
-        getGamesWon() int 
-        getGamesLost() int
+        updateStats(GameStats gameStats)
     }
 
     note for MatchStats "Invariant properties:
-        potted, missed, fouls, safeties >= 0
-        totalBreaks, wetBreaks, dryBreaks >= 0
-        gamesPlayed, gamesWons, gamesLost >= 0
-        gamesPlayed = gamesWon + gamesLost 
-        matchResult != null
+        _gamesWons, _gamesLost >= 0
+        _breakAndRuns >= 0
     "
 
     class GameStats {
-        int potted 
-        int missed 
-        int fouls 
-        int safeties 
-        int totalShots
-
         final GameType gameType
         final TeamBreaking teamBreaking
+
+        final ShootingStats shootingStats
+        final BreakingStats breakingStats
         
         Outcome gameResult 
         BreakResult breakResult
         boolean isBnr
-
-        maxPottable() int
-
-        setBreakResult(BreakResult breakResult) void
-        setGameResult(gameResult) void
-        setPotted(int potted) void
-        setMissed(int missed) void 
-        setFouls(int fouls) void 
-        setSafeties(int safeties) void
-
-        getBreakResult() BreakResult 
-        getGameResult() gameResult 
-        getPotted() int 
-        getMissed() int  
-        getFouls() int  
-        getSafeties() int  
-
     }
 
     note for GameStats "Invariant properties:
-        potted, missed, fouls, safeties >= 0
-        potted <= maxPottable();
-        totalShots >= 0 
-        totalShots = potted + missed + fouls + safeties
-        breakResult != null
-        gameResult != null
-        potted <= maxPossibleToPot
-        if isBrn then potted = maxPossibleToPot && missed, fouls, safeties == 0
-    "
+        None
+       "
 
-    class BreakResult {
-        <<Enum>>
-        WET 
-        DRY 
-        FOUL
-        NOT_BREAKING
-    }
+    class BreakResult { <<Enum>> }
+    note for BreakResult "See commoneEnums.md for more details"
+
+    class GameType { <<Enum>> }
+    note for GameType "See commoneEnums.md for more details"
+
+    class Outcome { <<Enum>> }
+    note for Outcome "See commoneEnums.md for more details"
 
     class Match {}
     note for Match "See matchModel.md for more details"

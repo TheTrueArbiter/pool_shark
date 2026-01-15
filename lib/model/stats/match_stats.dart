@@ -6,7 +6,6 @@ purpose: Hold stats of a pool match
 */
 
 import 'package:pool_shark/model/enums/game/break_result.dart';
-import 'package:pool_shark/model/enums/game_type.dart';
 import 'package:pool_shark/model/stats/breaking_stats.dart';
 import 'package:pool_shark/model/enums/outcome.dart';
 import 'package:pool_shark/model/stats/shooting_stats.dart';
@@ -14,7 +13,6 @@ import 'package:pool_shark/utils/stats_calculator.dart';
 import 'package:pool_shark/model/stats/game_stats.dart';
 
 final class MatchStats {
-  final GameType gameType;
 
   final ShootingStats shootingStats = ShootingStats();
   final BreakingStats breakingStats = BreakingStats();
@@ -26,7 +24,7 @@ final class MatchStats {
 
   int _breakAndRuns = 0;
 
-  MatchStats(this.gameType) {
+  MatchStats() {
     checkInvariants();
   }
 
@@ -45,17 +43,6 @@ final class MatchStats {
       );
   }
   
-  // int _maxPottable() {
-  //   switch (gameType) {
-  //     case GameType.eightBall:
-  //       return  gamesPlayed * MaxPottable.eightBall;
-  //     case GameType.nineBall:
-  //       return gamesPlayed * MaxPottable.nineBall;
-  //     case GameType.tenBall:
-  //       return gamesPlayed * MaxPottable.tenBall;
-  //   }
-  // }
-
   // Getters 
 
   // Game getters
@@ -74,6 +61,8 @@ final class MatchStats {
   double get breakAndRunRate => StatsCalculator.getRate(_breakAndRuns, gamesPlayed); 
 
   // Update match stats
+  // Meant for updateing 1 game at a time of match. This enables the ability 
+  // to have stats be checked throughout the match
   void updateStats(GameStats gameStats) {
     ShootingStats gameShootngStats = gameStats.shootingStats;
     

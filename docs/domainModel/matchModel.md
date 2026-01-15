@@ -3,7 +3,7 @@ classDiagram
   Match *-- MatchStats : Composition
   Match *-- Game : Composition
   Match *-- MatchSettings : Composition
-  Match *-- Team : Composition : Read Team Note
+  Match *-- Team : Composition : ReadNote
 
   Game o-- GameStats : Aggrigation
 
