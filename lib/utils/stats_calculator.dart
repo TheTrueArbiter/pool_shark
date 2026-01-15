@@ -11,7 +11,6 @@ class StatsCalculator {
     return n != 0 
       ? double.parse((x / n).toStringAsFixed(decimalPlaces)) * 100
       : 0;
- 
   }
 
 }

@@ -20,7 +20,10 @@ classDiagram
 
 
       class ShootingStats {
-        <<interface>>
+        int potted 
+        int missed 
+        int fouls 
+        int safeties
 
         getPotted() int 
         getMissed() int 
@@ -32,6 +35,9 @@ classDiagram
         getFouldRate() double  
         getSafetyRate() double 
     }
+    note for ShootingStats "Invariant properties:
+        potted, missed, fouls, safeties >= 0
+    "
 
     class MultiGameShootingStats {
         <<interface>>
@@ -39,20 +45,24 @@ classDiagram
         getMissedAverage() double 
         getFoulAverage() double 
         getSafeAverage() double
+        getBreakAndRunRate() double
         getBreakAndRuns() int
     }
 
+
     class BreakingStats {
-        <<interface>>
+        int wetBreaks 
+        int dryBreaks 
+        int foulBreaks
+
         getTotalBreaks() int 
         getWetBreaks() int 
         getDryBreaks() int 
         getFoulBreaks() int
 
-        getWetBreakPercent() double
-        getDryBreakPercent() double 
-        getFoulBreakPercent() double 
-        getPottedOnBreakAverage() double
+        getWetBreakRate() double
+        getDryBreakRate() double 
+        getFoulBreakRate() double 
     } 
 
     class UserStats {
@@ -61,16 +71,13 @@ classDiagram
         int fouls 
         int safeties 
         
-        int totalBreaks 
         int wetBreaks 
         int dryBreaks 
         int breakAndRuns
         
-        int gamesPlayed
         int gamesWon 
         int gamesLost
 
-        int matchesPlayed 
         int matchesWon
         int matchesLost
 
@@ -111,6 +118,8 @@ classDiagram
         
         int gamesWon 
         int gamesLost
+
+        int breakAndRuns
         
         Outcome matchResult
 
