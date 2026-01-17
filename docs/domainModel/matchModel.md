@@ -12,20 +12,10 @@ classDiagram
         UserProfile captain 
         List<UserProfile> members
         List<UserProfile> subs
-        boolean isTempTeam
-
-        getTeamName() String 
-        getCaptain() UserProfile 
-        getMembers() List<UserProfile>
-        getSubs() List<UserProfile> 
     } 
 
     note for Team "Invariant properties:
-        teamName != null
-        teamName.length >= 1
-        members != null 
-        members.size() >= 1
-        subs != null
+        None
     "
     note for Team "Ownership of a team will belong to context of which
         the team is used for. For a casual match, Match will own Team.
@@ -34,32 +24,22 @@ classDiagram
 
 
     class Game {
-        MatchType matchType 
-        GameType gameType
-        Breaking teamBreaking 
+        final GameType gameType
+        final Map<UserProfile, GameStats> playerStats 
+        final List<UserProfile> team1     // list of UserProfile objects, NOT team object
+        final List<UserProfile> team2     // list of UserProfile objects, NOT team object
+
+        TeamBreaking teamBreaking 
         UserProfile playerBreaking
 
-        List<UserProfile> team1     // list of UserProfile objects, NOT team object
-        List<UserProfile> team2     // list of UserProfile objects, NOT team object
+        List<UserProfile>? winner
 
-        List<UserProfile> winner
-
-        Map<UserProfile, GameStats> gameStats 
         boolean isGameFinished
 
-        String gameId
-        int gameTimeSeconds
         int team1Score 
         int team2Score 
+        int gameTimeSeconds
 
-        getTeam1() List<UserProfile>
-        getTeam2() List<UserProfile>
-        getWinner() List<UserProfile>
-        getIsGameFinished() boolean
-        getGameId() int
-        getTeam1Score() int
-        getTeam2Score() int 
-        
         getPlayerStats(UserProfile) GameStats
         calculateTeamScores() void
         
@@ -67,24 +47,14 @@ classDiagram
     }
 
     note for Game "Invariant properties:
-        matchType != null 
-        gameType != null 
-        teamBreaking != null 
-        team1 != null 
-        if matchType == SINGLES OR TEAM_SINGLES then playerBreaking != null 
-        all UserProfile in team1 != null
-        team2 != null 
-        all UserProfile in team2 != null
         if isGameFinished then winner != null
-        gameStats != null
+        playerStats.length = team1.length + team2.length
         each user in team1 and team2 is key in gameStats 
-        each GameStats in gameStats != null
-        gameId != null *** ADD OTHER INVARIANT for gameId 
         gameTimeSeconds >= 0
         team1Score >= 0
         team2Score >= 0
-        if matchType == SINGLES OR TEAM_SINGLES then team1.size() == 1 AND team2.size() == 1
-        if matchType == DOUBLES OR TEAM_DOUBLES then team1.size() == 2 AND team2.size() == 2
+        playerBreaking is in team1 or team2 
+        if isGameFinished then winner != null
     "
     note for Game "
         * Teams here are of UserProfile not Team objects

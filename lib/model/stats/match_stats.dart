@@ -75,8 +75,8 @@ final class MatchStats {
     else if (gameStats.breakResult == BreakResult.dry) { breakingStats.addDryBreaks(1);} 
     else if (gameStats.breakResult == BreakResult.foul) { breakingStats.addFoulBreaks(1); } 
 
-    if (gameStats.gameResult == Outcome.win) { _gamesWon++; } 
-    else if (gameStats.gameResult == Outcome.loss) { _gamesLost++; }
+    if (gameStats.outcome == Outcome.win) { _gamesWon++; } 
+    else if (gameStats.outcome == Outcome.loss) { _gamesLost++; }
 
     if (gameStats.isBreakAndRun) { _breakAndRuns++; }
 

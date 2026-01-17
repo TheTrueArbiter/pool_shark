@@ -19,7 +19,7 @@ final class GameStats {
 
   final ShootingStats shootingStats = ShootingStats();
 
-  Outcome gameResult = Outcome.undecided;
+  Outcome outcome = Outcome.undecided;
   BreakResult breakResult = BreakResult.notTaken;
 
   bool isBreakAndRun = false;
