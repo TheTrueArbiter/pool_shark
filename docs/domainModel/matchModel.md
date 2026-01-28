@@ -1,65 +1,73 @@
  ```
 classDiagram
-  Match *-- MatchStats : Composition
-  Match *-- Game : Composition
-  Match *-- MatchSettings : Composition
-  Match *-- Team : Composition : ReadNote
+    Match *-- MatchStats : Composition
+    Match *-- Game : Composition
+    Match *-- MatchSettings : Composition
+    Match *-- Team : Composition 
 
-  Game o-- GameStats : Aggrigation
+    Game *-- GameTeam : Aggrigation
+
+    GameTeam *-- GameStats : Composition
+    
 
     class Team {
         String teamName
         UserProfile captain 
-        List<UserProfile> members
-        List<UserProfile> subs
+        List<Participant> members
+        List<Participant> subs
     } 
 
     note for Team "Invariant properties:
-        None
+       Undefined as of yet 
     "
     note for Team "Ownership of a team will belong to context of which
         the team is used for. For a casual match, Match will own Team.
         for Tournement, Tournement will own Team, and Match will have a
         reference of Team. For Leauge ....."
 
+    class GameTeam {
+        final List<Player> Players 
+        final Team team 
+        final Map<Player, GameStats> allPlayerStats
+
+        initAllPlayerStats(GameType type, TeamBreaking team) void
+        playerStats(player p) GameStats?
+    } 
+    note for GameTeam "Invariant properties:
+       player.size >= 1 && <= 2 
+    "
 
     class Game {
         final GameType gameType
-        final Map<UserProfile, GameStats> playerStats 
-        final List<UserProfile> team1     // list of UserProfile objects, NOT team object
-        final List<UserProfile> team2     // list of UserProfile objects, NOT team object
+        final Map<Player, GameStats> playerStats 
+        final GameTeam team1
+        final GameTeam team2
 
         TeamBreaking teamBreaking 
-        UserProfile playerBreaking
 
-        List<UserProfile>? winner
+        Player? playerBreaking
+        GameTeam? winner
 
         boolean isGameFinished
 
-        int team1Score 
-        int team2Score 
-        int gameTimeSeconds
+        int _gameTimeSeconds
 
-        getPlayerStats(UserProfile) GameStats
-        calculateTeamScores() void
+        get team1FinalScore() int 
+        get team2FinalScore() int
+
+        _teamPotted(List<Player> team) int
+        _score(Outcome outcome, int potted, int opponentPotted) int
+        playerStats(UserProfile) GameStats
         
         setPlayerBreaking(UserProfile) void
     }
 
     note for Game "Invariant properties:
         if isGameFinished then winner != null
-        playerStats.length = team1.length + team2.length
-        each user in team1 and team2 is key in gameStats 
-        gameTimeSeconds >= 0
-        team1Score >= 0
-        team2Score >= 0
-        playerBreaking is in team1 or team2 
         if isGameFinished then winner != null
+        gameTimeSeconds >= 0
+        playerBreaking is in team1 or team2 
     "
-    note for Game "
-        * Teams here are of UserProfile not Team objects
-        * singles games will have teams with just 1 user
-        "
 
     class Match {
         UserProfile admin
@@ -147,6 +155,7 @@ classDiagram
         t1ScorLimt>= 1 or t1ScorLimit == -1
         t2ScoreLimit>= 1 or t2ScoreLimit == -1
     "
+
     
     class MatchStats {}
     note for MatchStats "See statsModel.md for more details"

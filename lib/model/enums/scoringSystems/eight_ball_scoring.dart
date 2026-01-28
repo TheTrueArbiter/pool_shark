@@ -1,6 +1,12 @@
+/* 
+eight_ball_scoring.dart 
+
+purpose:
+Enum class for eight ball scoring which has the ability to calculate 
+eight ball scores
+*/
 import 'package:pool_shark/model/enums/outcome.dart';
 import 'package:pool_shark/model/enums/scoringSystems/scoring_system.dart';
-import 'package:pool_shark/model/stats/game_stats.dart';
 
 enum EightBallScoring implements ScoringSystem {
   tenPoint('10 point system'),
@@ -16,54 +22,45 @@ enum EightBallScoring implements ScoringSystem {
 
   const EightBallScoring(this.displayName);
 
-  void _checkGameStats(GameStats? gameStats) {
-    assert(gameStats == null, 'EightBallScoring: gameStats cannot be null');
-  }
 
+  void _checkNegative(int value, String variableName) {
+      assert(
+        value >= 0, 
+        'EightBallScoring: $variableName cannot be negative. value: $value'
+      );
+  } 
 
   @override 
-  int calculateGameScore(GameStats? gameStats, int opponentPotted) {
-    _checkGameStats(gameStats);
+  int calculateGameScore(Outcome outcome, int potted, int opponentPotted) {
+    _checkNegative(potted, 'potted');
+    _checkNegative(opponentPotted, 'opponentPotted');
 
     switch(this) {
       case EightBallScoring.tenPoint: 
-        return _calculateTenPointScore(gameStats);
+        return _calculateTenPointScore(outcome, potted);
       case EightBallScoring.seventeenPoint: 
-        return _calculateSevteenPointScore(gameStats, opponentPotted);
+        return _calculateSevteenPointScore(outcome, potted, opponentPotted);
       case EightBallScoring.outcome: 
-        return _calculateOutcomeScore(gameStats);
+        return _calculateOutcomeScore(outcome);
     }
   }  
 
-  int _calculateTenPointScore(GameStats? gameStats) {
-    if (gameStats == null) {
-      throw ArgumentError('GameStats cannot be null');
-    }
-
-    return (gameStats.outcome == Outcome.win) 
+  int _calculateTenPointScore(Outcome outcome, int potted) {
+    return (outcome == Outcome.win) 
       ? tenPointMaxScore
-      : gameStats.shootingStats.potted;
+      : potted; 
   }
 
-  int _calculateOutcomeScore(GameStats? gameStats) {
-    if (gameStats == null) {
-      throw ArgumentError('GameStats cannot be nulll');
-    }
-
-    return (gameStats.outcome == Outcome.win) 
+  int _calculateOutcomeScore(Outcome outcome) {
+    return (outcome == Outcome.win) 
       ? outcomeWonScore 
       : outcomeLostScore;  
   }  
 
-  int _calculateSevteenPointScore(GameStats? gameStats, int opponentPotted) {
-    if (gameStats == null) {
-      throw ArgumentError('GameStats cannot be null');
-    }
-
-    return (gameStats.outcome == Outcome.win)
+  int _calculateSevteenPointScore(Outcome outcome, int potted, int opponentPotted) {
+    return (outcome == Outcome.win)
       ? seventeenPointMaxScore - opponentPotted
-      : gameStats.shootingStats.potted;
-    
+      : potted; 
   }
 
 }
