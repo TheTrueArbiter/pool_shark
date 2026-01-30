@@ -7,7 +7,11 @@ Notes:
 1) _playerBreaking, _winner, _gameTimeSeconds are made private so setters can be 
   denfinded as they need to have preconditons, rather than using default setters 
 
-2) This class is updated as a Game goes on 
+2) This class updated as a Game goes on 
+
+3) GameID -> gameId is the number of which game has been played within a match. 
+   For example the first game played will have an ID of 1, and the second an ID 
+   of 2.
 
 */
 import 'package:pool_shark/model/enums/scoringSystems/scoring_system.dart';
@@ -18,15 +22,19 @@ import 'package:pool_shark/model/enums/game_type.dart';
 import 'package:pool_shark/model/enums/game/team_breaking.dart';
 import 'package:pool_shark/model/enums/outcome.dart';
 
-final class Game {
 
+
+final class Game {
+  final noScoreSystemFlag = - 1;
   final GameType gameType;
   final GameTeam team1; 
   final GameTeam team2;
-  final ScoringSystem scoringSystem;
-  final TeamBreaking teamBreaking;
+  final ScoringSystem? scoringSystem;
+  final int gameId;
 
+  TeamBreaking teamBreaking;
   bool isGameFinised = false;
+  bool isBeingPlayed = false;
 
   Player? _playerBreaking;
   GameTeam? _winner;
@@ -40,11 +48,20 @@ final class Game {
     required this.team1,
     required this.team2,
     required this.scoringSystem,
+    required this.gameId
   }) {
     team1.initAllPlayerStats(gameType, teamBreaking);
     team2.initAllPlayerStats(gameType, teamBreaking);
     _checkInvariants();
   }  
+
+  @override
+  String toString() =>
+    'Game(id: $gameId, type: $gameType, '
+    'team1: ${team1.team.name}, team2: ${team2.team.name}, '
+    'winner: ${_winner?.team.name ?? 'none'}, '
+    'finished: $isGameFinised, playing: $isBeingPlayed, '
+    'time: $_gameTimeSeconds s)';
 
   void _checkInvariants() {
     _checkPlayerBreaking(_playerBreaking);
@@ -113,7 +130,7 @@ final class Game {
   /// the score of
 
   int _score(Outcome outcome, int potted, int opponentPotted) {
-    return scoringSystem.calculateGameScore(outcome, potted, opponentPotted);
+    return scoringSystem?.calculateGameScore(outcome, potted, opponentPotted) ?? noScoreSystemFlag; 
   } 
 
   // Setters

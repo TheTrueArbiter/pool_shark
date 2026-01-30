@@ -8,7 +8,6 @@ classDiagram
     Game *-- GameTeam : Aggrigation
 
     GameTeam *-- GameStats : Composition
-    
 
     class Team {
         String teamName
@@ -34,7 +33,7 @@ classDiagram
         playerStats(player p) GameStats?
     } 
     note for GameTeam "Invariant properties:
-       player.size >= 1 && <= 2 
+       player.length == 1 || player.length = 2 
     "
 
     class Game {
@@ -42,6 +41,8 @@ classDiagram
         final Map<Player, GameStats> playerStats 
         final GameTeam team1
         final GameTeam team2
+        final ScoringSystem? scoringSystem
+        final int gameId
 
         TeamBreaking teamBreaking 
 
@@ -71,13 +72,13 @@ classDiagram
 
     class Match {
         UserProfile admin
+        DateTime matchTimeUTC
 
         Team team1 
         Team team2 
         Team winner
         List<Games> games
 
-        Map<UserProfile, MatchStats> stats
         MatchSettings settings
         String matchId
 
@@ -90,30 +91,17 @@ classDiagram
         boolean isBeingPlayed
 
         generateGames() void
-
-        getTeam1() Team 
-        getTeam2() Team
-        getMatchStats(UserProfile user) MatchStats
-        getTeam1Score() int
-        getTeam2Score() int
-        getTeam1Wins() int
-        getTeam2Wins() int
-        getGamesPlayed() int
-        getMatchTime() int
+        nextTeamBreaking() TeamBreaking
 
         addGame() void 
         removeGame() void 
-        editGame(Game game) void
+
+        get gamesPlayed() int
+        get matchTimeLocal() DateTime 
+        get matchTimeUTC() DateTime
     }
 
     note for Match "Invariant properties:
-        admin != null
-        team1 != null 
-        all UserProfile in team1 != null    
-        team2 != null
-        all UserProfile in team2 != null 
-        all UserProfile from team1 & team2 as keys in stats 
-        each MatchStat in stats != null
         team1Score >= 0
         team2Score >= 0
         team1Wins >= 0
@@ -122,40 +110,23 @@ classDiagram
     "
 
     class MatchSettings {
-        MatchType matchType           
-        MatchContext matchContext      
-        MatchScoring scoring
-        GameType gameType 
-        BreakingFormat breakingFormat
-        int t1RaceLimit 
-        int t2RaceLimit
-        int t1ScoreLimit
-        int t2ScoreLimit
+        final MatchType matchType           
+        final MatchContext matchContext      
+        final MatchScoring scoring
+        final GameType gameType 
+        final BreakingFormat breakingFormat
+        final int team1WinTarget 
+        final int team2WinTarget 
+        final bool isHandcap
+        final ScoringSystem?
 
-        getMatchType() MatchType 
-        getMatchContext() MatchContext 
-        getMatchScoring() MatchScoring
-        getGameType() GameTYpe
-        getBreakType() BreakType 
-        getT1RaceLimit() int 
-        getT2RaceLimit() int 
-        getT1ScoreLimit() int
-        getT2ScoreLimit() int
-        
+        get isWinTarget() bool
     }
 
     note for MatchSettings "Invariant properties:
-        matchType != null 
-        matchContext != null
-        scoring != null
-        gameType != null
-        breakingFormat != null
-        t1RaceLimit >= 1 or t1RaceLimit == -1
-        t2RaceLimit >= 1 or t2RaceLimit == -1
-        t1ScorLimt>= 1 or t1ScorLimit == -1
-        t2ScoreLimit>= 1 or t2ScoreLimit == -1
+        team1WinTarget >= 1 or team1WinTarget == -1
+        team2WinTarget >= 1 or team2WinTarget == -1
     "
-
     
     class MatchStats {}
     note for MatchStats "See statsModel.md for more details"

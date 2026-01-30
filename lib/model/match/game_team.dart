@@ -31,6 +31,12 @@ final class GameTeam {
     _checkInvariants(); 
   }
 
+  @override
+  String toString() =>
+    'GameTeam(team: ${team.name}, '
+    'players: ${players.map((p) => p.firstName).toList()}, '
+    'allPlayerStats: ${allPlayerStats.keys.map((p) => p.firstName).toList()})';
+
   // _initAllPlayerStats
   void initAllPlayerStats(GameType gameType, TeamBreaking teamBreaking) {
     for (Player p in players) {

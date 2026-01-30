@@ -1,4 +1,5 @@
 enum TeamBreaking {
   team1,
-  team2
+  team2,
+  undecided
 }

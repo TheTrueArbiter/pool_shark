@@ -3,6 +3,11 @@ match_stats.dart
 
 purpose: Hold stats of a pool match
 
+notes: 
+  1) Dynamic class: This class will be updated as a match goes on. Its properties 
+     are NOT set in stone upone creation
+
+
 */
 
 import 'package:pool_shark/model/enums/game/break_result.dart';
