@@ -12,18 +12,7 @@ final class History {
     list.add(object);
   }
 
-  // Match getMatch(String matchId) {
-  //
-  // } 
-  //
-  // Tournament getTournment(String tournamentId) {
-  //   
-  // }
-  //
-  // Leauge getLeauge() {
-  //
-  // }
-  //
-  //
+  // TODO: decide how match, tournaments, and leagues will be found by
+
 
 }

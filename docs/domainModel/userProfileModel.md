@@ -9,6 +9,29 @@ classDiagram
   History o-- Tournment : Aggriation 
   History o-- Leauge : Aggriation 
 
+    class User {
+        String get firstName 
+        String get lastName 
+        String get nickname
+        String get displayName 
+
+        Rank get rank
+        HeadToHeadRecord get headToHeadRecord
+        History get history
+        UserStats get userStats
+
+        set firstName(String firstName) void
+        set lastName(String lastName) void
+        set nickName(String nickName) void
+        set displayName(String displayName) void 
+
+        resetSingleHeadToHead(User user) void 
+        resetAllHeadToHead() void 
+        resetUserStats() void 
+
+
+    }
+
     class UserProfile {
         String firstName
         String lastName
@@ -55,6 +78,9 @@ classDiagram
     "
 
     class HeadToHeadRecord {
+        User user 
+        User opponent
+
         int gamesWon 
         int gamesLost
         int matchesWon
@@ -72,6 +98,7 @@ classDiagram
     }
 
     note for HeadToHeadRecord "Invariant properties:
+        user != opponent
         gamesWon >= 0
         gamesLost>= 0
         matchesWons >= 0
@@ -84,14 +111,10 @@ classDiagram
         ApaEightBallRank apaEightBallRank
 
         updateFargo(int opponentFargo, Outcome outcome) void
-        setApaNineBallRank() void 
-        setApaEightBallRank() void
     }
 
     note for Ranking "Invariant properties:
-        fargoRating >= 200
-        apaEightBallRank != null
-        apaNineBallRank != null
+        fargoRating >= 200 && fargoRating <= 1000
     "
 
     class History {
@@ -100,21 +123,9 @@ classDiagram
         List<Leauge> leaugeHistory
 
         addToList(List<t> list, t object)
-        
-        getMatchHistory() List<Match>
-        getTournmentHistory() List<Tournment>
-        getLeaugeHistory() List<leaugeHistory>
     }
 
     note for History "Invariant properties:
-        matchHistory != null 
-        each Match in matchHistory != null
-        tournmentHistory != null 
-        each Tournment in tournmentHistory != null
-        leaugeHistory != null 
-        each Leauge in leaugeHistory != null
-        headToHeadRecords != null
-        for each HeadToHeadRecord in headToHeadRecords != null
     "
 
     class UserStats {}
