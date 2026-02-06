@@ -16,8 +16,11 @@ import 'package:pool_shark/model/enums/outcome.dart';
 import 'package:pool_shark/model/stats/shooting_stats.dart';
 import 'package:pool_shark/utils/stats_calculator.dart';
 import 'package:pool_shark/model/stats/game_stats.dart';
+import 'package:pool_shark/model/players/player.dart';
 
 final class MatchStats {
+  final Player statsOf;
+  final Player opponent;
 
   final ShootingStats shootingStats = ShootingStats();
   final BreakingStats breakingStats = BreakingStats();
@@ -29,7 +32,7 @@ final class MatchStats {
 
   int _breakAndRuns = 0;
 
-  MatchStats() {
+  MatchStats(this.statsOf, this.opponent) {
     checkInvariants();
   }
 

@@ -2,6 +2,7 @@
 classDiagram
    Player <-- UserParticipant : Implements 
    Player <-- GuestParticipant : Implements 
+   Player o-- User : Aggrigation
 
 class Player {
     <<interface>>
@@ -28,6 +29,10 @@ class GuestPlayer {
     final Rank rank;
     final Team team;
 }
+
+class User {}
+    note for User "See userModel.md for more details"
+
 
 
 

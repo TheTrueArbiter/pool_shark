@@ -1,8 +1,5 @@
+import 'package:pool_shark/model/stats/match_stats.dart';
 import 'package:pool_shark/model/userProfile/user.dart';
-import 'package:pool_shark/model/match/game.dart';
-import 'package:pool_shark/model/players/user_player.dart';
-import 'package:pool_shark/model/players/player.dart';
-import 'package:pool_shark/model/match/game_team.dart';
 import 'package:pool_shark/utils/stats_calculator.dart';
 import 'package:pool_shark/model/enums/outcome.dart';
 
@@ -45,38 +42,23 @@ final class HeadToHeadRecord {
 
   // Logic
 
-  void updateRecord(Outcome matchOutcome, List<Game> games) {
+  void updateRecord(MatchStats matchStats) {
+    _gamesWon += matchStats.gamesWon;
+    _gamesLost += matchStats.gamesLost;
 
-    if (matchOutcome == Outcome.win) { _matchesWon++; }
-    else { _matchesLost++; }
+    assert(
+      matchStats.matchOutcome != Outcome.undecided,
+      'match outcome cannot be undecided when updating HeadToHeadRecord'
+    );
 
-    for (Game g in games) {
-      if ( _isGameWon(g) ) {
-        _gamesWon++; 
-      }
-      else {
-        _gamesLost++; 
-      }
+    if (matchStats.matchOutcome == Outcome.win) {
+      _matchesWon++;
     }
-    _checkInvariants();
+    else if (matchStats.matchOutcome == Outcome.loss) {
+      _matchesLost++;
+    }
+
+   _checkInvariants();
   }
 
-  bool _isGameWon(Game game) {
-    assert(game.winner != null, "HeadToHeadRecord, _isGameWon, game obj passed cannot be null"); 
-
-    bool isMatchWon = false;
-    GameTeam? winningTeam = game.winner;
-      
-    if (winningTeam == null) {
-      throw ArgumentError("HeadToHeadRecord, isGameWon(), winning team cannot be null"); 
-    }
-
-    for (Player p in winningTeam.players) {
-      if (p is UserPlayer && p.user == user) { 
-        isMatchWon == true;
-        break;
-      }
-    }
-    return isMatchWon;
-  }
 }

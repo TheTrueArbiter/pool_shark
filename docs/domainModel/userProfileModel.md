@@ -10,6 +10,9 @@ classDiagram
   History o-- Leauge : Aggriation 
 
     class User {
+        <<interface>>
+        int get id;
+
         String get firstName 
         String get lastName 
         String get nickname
@@ -25,12 +28,25 @@ classDiagram
         set nickName(String nickName) void
         set displayName(String displayName) void 
 
-        resetSingleHeadToHead(User user) void 
-        resetAllHeadToHead() void 
+        resetHeadToHeadRecord(User user) void 
+        updateHeadToHeadRecord(MatchStats matchStats)
         resetUserStats() void 
-
-
     }
+
+    class LocalUser {
+        String firstName 
+        String lastName 
+        String nickName;
+
+        final int id 
+        final Rank rank 
+        final History history 
+        final Map<User, HeadToHeadRecord> headToHeadRecords
+
+        resetHeadToHeadRecord(User user) void 
+        updateHeadToHeadRecord(MatchStats matchStats) void
+        resetUserStats() void 
+    } 
 
     class UserProfile {
         String firstName

@@ -5,10 +5,11 @@ classDiagram
 
     Match *-- MatchStats : Composition
     Game *-- GameStats : Composition
-    UserProfile *-- UserStats : Composition
+    User *-- UserStats : Composition
 
     MatchStats *-- BreakingStats : Composition 
     MatchStats *-- ShootingStats: Composition 
+    MatchStats o-- User: Aggrigation
     MatchStats --> Outcome : Uses
 
     GameStats *-- ShootingStats : Composition
@@ -104,6 +105,8 @@ classDiagram
     "
 
     class MatchStats {
+        final Player statsOf
+        final Player opponent
         final ShootingStats shootingStats
         final BreakingStats breakingStats
     
@@ -166,7 +169,7 @@ classDiagram
     class Game {}
     note for Game "See matchModel.md for more details"
 
-    class UserProfile{}
+    class User{}
     note for UserProfile "See userProfile.md for more details"
 
   ``` 

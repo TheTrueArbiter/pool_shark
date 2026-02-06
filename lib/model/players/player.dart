@@ -1,5 +1,8 @@
 /* 
-participant.dart
+player.dart
+
+purpose: interface for player classes. Player classes will represent 
+players in games, matches, tournements, and leagues.
 */
 
 import 'package:pool_shark/model/userProfile/rank.dart';
