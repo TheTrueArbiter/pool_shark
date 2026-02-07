@@ -1,16 +1,27 @@
 ```
 classDiagram
-  UserProfile *-- UserStats : Composition
-  UserProfile *-- HeadToHeadRecord : Composition 
-  UserProfile *-- Ranking : Composition 
-  UserProfile *-- History : Composition 
+  User *-- UserStats : Composition
+  User *-- HeadToHeadRecord : Composition 
+  User *-- Ranking : Composition 
+  User *-- History : Composition 
+
+  User <|-- LocalUser : inheritence
+  User <|-- OnlineUser : inheritence
 
   History o-- Match : Aggriation 
   History o-- Tournment : Aggriation 
   History o-- Leauge : Aggriation 
 
     class User {
-        <<interface>>
+        String firstName 
+        String lastName 
+        String nickName
+
+        final int id 
+        final Rank rank 
+        final History history 
+        final Map<User, HeadToHeadRecord> headToHeadRecords
+
         int get id;
 
         String get firstName 
@@ -32,66 +43,37 @@ classDiagram
         updateHeadToHeadRecord(MatchStats matchStats)
         resetUserStats() void 
     }
+    note for User "Invariant properties:
+            1 <= firstName.length <= 32
+            0 <= lastName.length <= 32
+            0 <= nickname.length <= 32
+            1 <= displayName.length <= firstName.length + lastName.length + nickname.length
 
-    class LocalUser {
-        String firstName 
-        String lastName 
-        String nickName;
+        "
 
-        final int id 
-        final Rank rank 
-        final History history 
-        final Map<User, HeadToHeadRecord> headToHeadRecords
+    class LocalUser {} 
+    note for LocalUser "This class is not unique from User class yet"
 
-        resetHeadToHeadRecord(User user) void 
-        updateHeadToHeadRecord(MatchStats matchStats) void
-        resetUserStats() void 
-    } 
-
-    class UserProfile {
-        String firstName
-        String lastName
-        String nickname 
-        String username
-        String email
-
-        UserStats userStats
-        Ranking ranking
-        History history
+    class OnlineUser {
+        String email 
+        String username 
+        String passwordHash
         
-        Map<UserProfile, HeadToHeadRecord> headToHeadRecords 
-        List<UserProfile> friends
-        
-        getFirstName() String 
-        getLastName() String 
-        getNickName() String 
-        getUserName() String
-        getEmail() String
+        get username() String 
+        get passwordHash() String 
+        get email() String 
 
-       getUserStats() UserStats
-
-        setFirstName(String firstName) void 
-        setLastName(String lastName) void 
-        setNickname(String nickname) void
-        setUsername(String username) void 
-        setEmail(String email) void
+        set username(String username) void 
+        set email(Stirng email) void
+        set passwordHash(String passwordHash) void
     }
-
-    note for UserProfile "Invariant properties:
-        firstName != null
-        firstName.length >= 1 && firstName.length <= 50
-        lastName != null 
-        lastName.length <= 50
-        nickName != null 
-        nickName.length <= 50
-        userName != null
-        userName.length >= 5 && username.length <= 50
-        email != null
-        userStats != null
-        friends != null
-        for each UserProfile in friends != null 
-        history != null
-    "
+    note for OnlineUser "Invariant properties:
+            3 <= username.length <= 20
+            * Need to add passwordHash invariants
+            email contains only 1 '@' 
+            email has a domain and username which is not empty
+            domain of email has a '.' and a tld
+        "
 
     class HeadToHeadRecord {
         User user 

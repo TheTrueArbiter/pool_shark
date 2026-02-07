@@ -6,8 +6,8 @@ account wheter it be an online one or a local one.
 
 */
 import 'package:pool_shark/model/players/player.dart';
-import 'package:pool_shark/model/userProfile/user.dart';
-import 'package:pool_shark/model/userProfile/rank.dart';
+import 'package:pool_shark/model/user/user.dart';
+import 'package:pool_shark/model/user/rank.dart';
 import 'package:pool_shark/model/match/team.dart';
 
 final class UserPlayer implements Player {

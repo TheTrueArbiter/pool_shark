@@ -14,12 +14,12 @@ Notes:
 
 import 'package:pool_shark/model/players/player.dart';
 import 'package:pool_shark/model/stats/match_stats.dart';
-import 'package:pool_shark/model/userProfile/user_profile.dart';
+import 'package:pool_shark/model/user/user.dart';
 
 final class Team {
 
   final String name;
-  final UserProfile captain;
+  final User captain;
   final Map<Player, MatchStats> allPlayerStats = {};
   final List<Player> players = [];
   final List<Player> subs = [];

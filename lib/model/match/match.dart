@@ -18,7 +18,7 @@ import 'package:pool_shark/model/match/match_settings.dart';
 import 'package:pool_shark/model/match/game_team.dart';
 import 'package:pool_shark/model/match/team.dart';
 import 'package:pool_shark/model/match/game.dart';
-import 'package:pool_shark/model/userProfile/user.dart';
+import 'package:pool_shark/model/user/user.dart';
 
 
 final class Match {

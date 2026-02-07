@@ -1,74 +1,52 @@
-import 'package:pool_shark/model/constants/name_lengths.dart';
-import 'package:pool_shark/model/players/user_player.dart';
+/* 
+user.dart
+purpose: interface class for users
+*/
 
 import 'package:pool_shark/model/stats/user_stats.dart';
-import 'package:pool_shark/model/userProfile/head_to_head_record.dart';
-import 'package:pool_shark/model/userProfile/history.dart';
-import 'package:pool_shark/model/userProfile/user.dart';
-import 'package:pool_shark/model/userProfile/rank.dart';
+import 'package:pool_shark/model/user/head_to_head_record.dart';
+import 'package:pool_shark/model/user/history.dart';
+import 'package:pool_shark/model/user/rank.dart';
+import 'package:pool_shark/model/stats/match_stats.dart';
+import 'package:pool_shark/model/user/user_validation.dart';
+import 'package:pool_shark/model/players/user_player.dart';
 import 'package:pool_shark/model/players/player.dart';
 
-import 'package:pool_shark/model/stats/match_stats.dart';
-
-final class LocalUser implements User {
+class User with UserValidation {
   String _firstName;
   String _displayName;
-  String _lastName = '';
-  String _nickname = '';
+  String _lastName;
+  String _nickname;
 
   UserStats _userStats = UserStats();
 
-  @override 
-  final int id;
-
-  @override
+  final String id;
   final Rank rank = Rank();
-
-  @override
   final History history = History();
-
-  @override
   final Map<User, HeadToHeadRecord> headToHeadRecords = {}; 
 
-  LocalUser(this.id, this._firstName, this._displayName) {
-    _checkInvariants();
-  }
+  User({
+    required this.id,
+    required String firstName,
+    required String displayName,
+    String lastName = '',
+    String nickname = ''
+  }) :  
+    _firstName = firstName,
+    _displayName = displayName,
+    _lastName = lastName,
+    _nickname = nickname {
 
-  // Class invariants & pre conditions
-
-  void _checkInvariants() {
-    _checkFirstName(_firstName);
-    _checkLastName(_lastName);
-    _checkNickname(_nickname);
-    _checkDisplayName(_displayName);
-  }
-
-  void _checkLength(String value, String varName, int min, int max) {
-    value = value.trim();
-    assert(
-      firstName.length <= max && firstName.length >= min,
-
-      'LocalUser: $varName length is not in valid range. Valid range is \n'
-      '$min to $max, $varName = $value\n'
-      ' and has length of ${value.length}'
+    checkUser(
+      id: id,
+      firstName: _firstName, 
+      lastName: _lastName,
+      nickname: _nickname, 
+      displayName: _displayName
     );
   }
 
-  void _checkFirstName(String firstName) {
-    _checkLength(firstName, 'firstname', NameLengths.firstNameMin, NameLengths.firstNameMax);
-  }
-
-  void _checkLastName(String lastName) {
-    _checkLength(lastName, 'lastName', NameLengths.lastNameMin, NameLengths.lastNameMax);
-  }
-
-  void _checkNickname(String nickname) {
-    _checkLength(nickname, 'nickname', NameLengths.nicknameMin, NameLengths.nicknameMax);
-  }
-
-  void _checkDisplayName(String displayName) {
-    _checkLength(displayName, 'displayName', NameLengths.displayNameMin, NameLengths.displayNameMax);
-  }
+  // Pre conditions
 
   // Precondition for updateHeadToHead 
   void _checkIsUserPlayer(Player player) {
@@ -80,7 +58,7 @@ final class LocalUser implements User {
   }
 
   // Precondition for updateHeadToHead
-  void _checkIsSameId(int idToCheck) {
+  void _checkIsSameId(String idToCheck) {
     assert( 
       idToCheck == id,
       'LocalUser, RecordSinglesHeadToHead : user id of match stats must match user\n'
@@ -103,60 +81,41 @@ final class LocalUser implements User {
 
   // Getters
 
-  @override
   String get firstName => _firstName;
-
-  @override
   String get lastName => _lastName; 
-
-  @override
   String get nickname => _nickname; 
-
-  @override 
-  get displayName => _displayName;
-
-  @override 
+  String get displayName => _displayName;
   UserStats get userStats => _userStats;
 
 
   // Setters
-
-  @override
+  
   set firstName(String fistName) {
-    _checkFirstName(firstName);
+    checkFirstName(firstName);
     _firstName = firstName; 
-    _checkInvariants();
   }
 
-  @override 
   set lastName(String lastName) {
-    _checkLastName(lastName);
+    checkLastName(lastName);
     _lastName = lastName;
-    _checkInvariants();
   }
 
-  @override 
   set nickname(String nickname) {
-    _checkNickname(nickname);
+    checkNickname(nickname);
     _nickname = nickname;
-    _checkInvariants();
   }
 
-  @override 
   set displayName(String displayName) {
-    _checkDisplayName(displayName); 
+    checkDisplayName(displayName); 
     _displayName = displayName;
-    _checkInvariants();
   }
 
   // Logic 
 
-  @override 
   void resetUserStats() {
     _userStats = UserStats();
   }
 
-  @override 
   void updateHeadToHeadRecord(MatchStats matchStats) {
 
     _checkIsUserPlayer(matchStats.statsOf);
@@ -170,11 +129,8 @@ final class LocalUser implements User {
     _checkHeadToHeadRecord(record);
   }
 
-  @override 
   void resetHeadToHeadRecord(User user) {
     _checkRecordReturn(user);
     headToHeadRecords[user] = HeadToHeadRecord(this, user);
   }
-
-    
 }

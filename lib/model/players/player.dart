@@ -5,7 +5,7 @@ purpose: interface for player classes. Player classes will represent
 players in games, matches, tournements, and leagues.
 */
 
-import 'package:pool_shark/model/userProfile/rank.dart';
+import 'package:pool_shark/model/user/rank.dart';
 import 'package:pool_shark/model/match/team.dart';
 
 abstract class Player {

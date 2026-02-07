@@ -10,4 +10,10 @@ final class NameLengths {
   
   static const displayNameMin = 1;
   static const displayNameMax = firstNameMax + lastNameMax + nicknameMax;
+
+  static const emailMin = 3;
+  static const emailMax = 255;
+
+  static const usernameMin = 3;
+  static const usernameMax = 20;
 }

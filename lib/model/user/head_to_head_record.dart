@@ -1,5 +1,5 @@
 import 'package:pool_shark/model/stats/match_stats.dart';
-import 'package:pool_shark/model/userProfile/user.dart';
+import 'package:pool_shark/model/user/user.dart';
 import 'package:pool_shark/utils/stats_calculator.dart';
 import 'package:pool_shark/model/enums/outcome.dart';
 
