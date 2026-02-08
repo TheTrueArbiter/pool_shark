@@ -15,8 +15,8 @@ import 'package:pool_shark/model/enums/game/team_breaking.dart';
 import 'package:pool_shark/model/enums/match/breaking_format.dart';
 import 'package:pool_shark/model/enums/match/match_type.dart';
 import 'package:pool_shark/model/match/match_settings.dart';
-import 'package:pool_shark/model/match/game_team.dart';
-import 'package:pool_shark/model/match/team.dart';
+import 'package:pool_shark/model/team/game_team.dart';
+import 'package:pool_shark/model/team/team.dart';
 import 'package:pool_shark/model/match/game.dart';
 import 'package:pool_shark/model/user/user.dart';
 

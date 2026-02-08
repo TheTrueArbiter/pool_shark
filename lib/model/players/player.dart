@@ -6,7 +6,7 @@ players in games, matches, tournements, and leagues.
 */
 
 import 'package:pool_shark/model/user/rank.dart';
-import 'package:pool_shark/model/match/team.dart';
+import 'package:pool_shark/model/team/team.dart';
 
 abstract class Player {
   String get displayName;

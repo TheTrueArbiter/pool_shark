@@ -17,7 +17,7 @@ Notes:
 import 'package:pool_shark/model/enums/scoringSystems/scoring_system.dart';
 import 'package:pool_shark/model/players/player.dart';
 import 'package:pool_shark/model/stats/game_stats.dart';
-import 'package:pool_shark/model/match/game_team.dart';
+import 'package:pool_shark/model/team/game_team.dart';
 import 'package:pool_shark/model/enums/game_type.dart';
 import 'package:pool_shark/model/enums/game/team_breaking.dart';
 import 'package:pool_shark/model/enums/outcome.dart';

@@ -1,14 +1,15 @@
 /*
-
 guest_player.dart
 
 purpose: hold data of guest players, these are players who don't have a 
 pool shark account.
 
 */
+
 import 'package:pool_shark/model/players/player.dart';
+
 import 'package:pool_shark/model/user/rank.dart';
-import 'package:pool_shark/model/match/team.dart';
+import 'package:pool_shark/model/team/team.dart';
 
 final class GuestPlayer implements Player {
   @override

@@ -5,14 +5,15 @@ purpose: interface class for users
 
 import 'package:pool_shark/model/stats/user_stats.dart';
 import 'package:pool_shark/model/user/head_to_head_record.dart';
-import 'package:pool_shark/model/user/history.dart';
+import 'package:pool_shark/model/user/records/history.dart';
 import 'package:pool_shark/model/user/rank.dart';
 import 'package:pool_shark/model/stats/match_stats.dart';
-import 'package:pool_shark/model/user/user_validation.dart';
 import 'package:pool_shark/model/players/user_player.dart';
 import 'package:pool_shark/model/players/player.dart';
+import 'package:pool_shark/utils/check_length.dart';
+import 'package:pool_shark/model/constants/name_lengths.dart';
 
-class User with UserValidation {
+class User {
   String _firstName;
   String _displayName;
   String _lastName;
@@ -37,14 +38,35 @@ class User with UserValidation {
     _lastName = lastName,
     _nickname = nickname {
 
-    checkUser(
-      id: id,
-      firstName: _firstName, 
-      lastName: _lastName,
-      nickname: _nickname, 
-      displayName: _displayName
-    );
+    _checkUser();
+
+      }
+
+  // Class invariants 
+
+  void _checkUser() {
+    _checkFirstName(_firstName);
+    _checkLastName(_lastName);
+    _checkNickname(_nickname);
+    _checkDisplayName(_displayName);
   }
+
+  void _checkFirstName(String firstName) =>
+      CheckLength.checkLength(firstName, 'firstName', NameLengths.firstNameMin, NameLengths.firstNameMax);
+
+  void _checkLastName(String lastName) =>
+      CheckLength.checkLength(lastName, 'lastName', NameLengths.lastNameMin, NameLengths.lastNameMax);
+
+  void _checkNickname(String nickname) =>
+      CheckLength.checkLength(nickname, 'nickname', NameLengths.nicknameMin, NameLengths.nicknameMax);
+
+  void _checkDisplayName(String displayName) =>
+      CheckLength.checkLength(displayName, 'displayName', NameLengths.displayNameMin, NameLengths.displayNameMax);
+
+  void checkId(String id) {
+    // TODO: add ID invariants once a method has been chosen for ID's 
+  }
+
 
   // Pre conditions
 
@@ -91,22 +113,22 @@ class User with UserValidation {
   // Setters
   
   set firstName(String fistName) {
-    checkFirstName(firstName);
+    _checkFirstName(firstName);
     _firstName = firstName; 
   }
 
   set lastName(String lastName) {
-    checkLastName(lastName);
+    _checkLastName(lastName);
     _lastName = lastName;
   }
 
   set nickname(String nickname) {
-    checkNickname(nickname);
+    _checkNickname(nickname);
     _nickname = nickname;
   }
 
   set displayName(String displayName) {
-    checkDisplayName(displayName); 
+    _checkDisplayName(displayName); 
     _displayName = displayName;
   }
 

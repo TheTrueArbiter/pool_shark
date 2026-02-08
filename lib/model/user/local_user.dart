@@ -1,5 +1,4 @@
 /* 
-
 local_user.dart
 
 purpose: hold data and logic for local users 
