@@ -12,8 +12,8 @@ classDiagram
     class Team {
         String teamName
         UserProfile captain 
-        List<Participant> members
-        List<Participant> subs
+        List<Players> members
+        List<Players> subs
     } 
 
     note for Team "Invariant properties:

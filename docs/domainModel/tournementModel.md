@@ -18,50 +18,71 @@ classDiagram
 
   RoundRobinPhase *-- Group : Composition
 
+
+    class PrizeMoney {
+        final double prizePoolDollars;
+        final MoneyDistributionType moneyDistributionType;
+        final MoneyDistribution moneyDistribution;
+
+    }
+
+    class MoneyDistribution {
+        <<interface>>
+        get winnersPay
+        get runnerUpsPay
+    }
+
+    class PodiumDistribution {
+          final double firstPlacePay;
+          final double secondPlacePay;
+          final double thirdPlacePay; 
+    }
+    note for PodiumDistribution "Invariant properties:
+        firstPlacePay, secondPlacePay, thirdPlacePay >= 0
+        firstPlacePay > secondPlacePay
+        if (secondPlacePay != 0) secondPlacePay > thirdPlacePay
+    "
+
+
+    class RoundDistribution {
+          final double firstPlacePay;
+          final double secondPlacePay;
+          final Map<int, double> roundPayouts;
+    }
+
+    note for RoundDistribution "Invariant properties:
+        firstPlacePay, secondPlacePay >= 0
+        firstPlacePay > secondPlacePay
+    "
+
+
     class TournementSettings {
-        GameType gameType
-        MatchType matchType
-        MatchScoring matchScoring
-        BreakingFormat breakingFormat
-        EliminationType eliminationType
-        boolean isHandicap
-        boolean isRoundRobin
-        boolean isSeeded
+        final GameType gameType
+        final MatchType matchType
+
+        final MatchScoring matchScoring
+        final ScoringSystem? scoringSystem
+
+        final BreakingFormat breakingFormat
+        final EliminationType eliminationType
+        PrizeMoney prizeMoney
+
+
+        final boolean isHandicap
+        final boolean isRoundRobin
+        final boolean isSeeded
+
         int numOfTables
-        int teamLimit
-        int teamSizeLimit
-        int teamSizeMin
+
+        final int teamLimit
+        final int teamSizeLimit
+        final int subLimit
+
         int[] winsPerRound
         int prizeMoneyDollars
-        
-        getMatchType() MatchType 
-        getMatchScoring() matchScoring
-        getBreakingFormat() BreakingFormat 
-        getEliminationType() EliminationType 
-        getIsHandiCap() Boolean 
-        getIsRoundRobin() Boolean 
-        getIsSeeded() Boolean 
-        getTeamLimit() int
-        getTeamSizeLimit() int 
-        getTeamSizeMin() int 
-        getWinsPerRound() int[] 
-        getWinsForRound(int round) int
-        getPrizeMoneyDollars() double
     }
 
     note for TournementSettings "Invariant properties:
-        gameType != null
-        matchType != null 
-        matchScoring != null
-        breakingFormat != null 
-        eliminationType != null 
-        numOfTables >= 1
-        teamLimit >= 4 OR teamLimit = -1    // -1 for no limit
-        teamSizeLimit >= 1 && teamSizeLimit <= 10
-        teamSizeMin >= 1 && teamSizeMin <= teamSizeLimit 
-        winsPerRound != null 
-        each element in winsPerRound >= 1 
-        prizeMoneyDollars >= 0
     "
 
     class Tournment {

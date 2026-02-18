@@ -4,9 +4,9 @@ purpose: interface class for users
 */
 
 import 'package:pool_shark/model/stats/user_stats.dart';
-import 'package:pool_shark/model/user/head_to_head_record.dart';
+import 'package:pool_shark/model/user/records/head_to_head_record.dart';
 import 'package:pool_shark/model/user/records/history.dart';
-import 'package:pool_shark/model/user/rank.dart';
+import 'package:pool_shark/model/user/records/rank.dart';
 import 'package:pool_shark/model/stats/match_stats.dart';
 import 'package:pool_shark/model/players/user_player.dart';
 import 'package:pool_shark/model/players/player.dart';
