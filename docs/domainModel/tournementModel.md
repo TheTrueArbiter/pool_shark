@@ -12,12 +12,15 @@ classDiagram
   Bracket *-- MatchNode : Composition(Inner Class)
   Bracket *-- Edge : Composition(Inner Class)
   Bracket *-- Match : Composition
-    
 
   Scoreboard *-- ScoreboardEntry : Composition
 
   RoundRobinPhase *-- Group : Composition
 
+  PrizeMoney *-- MoneyDistribution : Composition
+
+  MoneyDistribution <|- RoundDistribution 
+  MoneyDistribution <|- PodiumDistribution 
 
     class PrizeMoney {
         final double prizePoolDollars;

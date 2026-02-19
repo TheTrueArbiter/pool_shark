@@ -19,7 +19,7 @@ import 'package:pool_shark/model/enums/match/breaking_format.dart';
 import 'package:pool_shark/model/enums/match/match_scoring.dart';
 import 'package:pool_shark/model/enums/match/match_type.dart';
 import 'package:pool_shark/model/enums/scoringSystems/scoring_system.dart';
-import 'package:pool_shark/model/tournament/prize_money.dart';
+import 'package:pool_shark/model/tournament/prizeMoney/prize_money.dart';
 
 final class TournamentSettings {
   final GameType gametype;
@@ -30,7 +30,8 @@ final class TournamentSettings {
 
   final BreakingFormat breakingFormat;
   final EliminationType eliminationType;
-  final PrizeMoney prizeMoney;
+
+  final PrizeMoney? prizeMoney; // null = no prize money
   
   final bool isHandicap; 
   final bool isRoundRobin; 

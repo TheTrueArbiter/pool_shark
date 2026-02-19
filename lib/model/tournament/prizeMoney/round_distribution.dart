@@ -12,17 +12,18 @@ and second place payouts must be listed aswell.
 import 'package:pool_shark/model/tournament/prizeMoney/money_distribution.dart';
 
 final class RoundDistribution implements MoneyDistribution {
-  @override
-  final double firstPlacePay;
-
-  @override
-  final double secondPlacePay;
-
   final Map<int, double> roundPayouts;
 
+  @override
+  final double firstPlacePercent;
+
+  @override
+  final double secondPlacePercent;
+
+
   RoundDistribution({
-    required this.firstPlacePay,
-    required this.secondPlacePay,
+    required this.firstPlacePercent,
+    required this.secondPlacePercent,
     required this.roundPayouts
   }) {
 
@@ -31,10 +32,10 @@ final class RoundDistribution implements MoneyDistribution {
   }
 
   void _checkInvariants() {
-    _checkNotNegative(firstPlacePay, 'firstPlacePay');
-    _checkNotNegative(secondPlacePay, 'secondPlacePay');
+    _checkNotNegative(firstPlacePercent, 'firstPlacePay');
+    _checkNotNegative(secondPlacePercent, 'secondPlacePay');
 
-    _checkGreaterThan(firstPlacePay, secondPlacePay, 'firstPlacePay', 'secondPlacePay');
+    _checkGreaterThan(firstPlacePercent, secondPlacePercent, 'firstPlacePay', 'secondPlacePay');
 
   }
 

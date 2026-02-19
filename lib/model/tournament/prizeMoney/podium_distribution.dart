@@ -11,31 +11,36 @@ import 'package:pool_shark/model/tournament/prizeMoney/money_distribution.dart';
 class PodiumDistribution implements MoneyDistribution {
 
   @override
-  final double firstPlacePay;
+  final double firstPlacePercent;
 
   @override
-  final double secondPlacePay;
+  final double secondPlacePercent;
 
-  final double thirdPlacePay; 
+  final double thirdPlacePercent; 
 
   PodiumDistribution({
-    required this.firstPlacePay,
-    required this.secondPlacePay, 
-    required this.thirdPlacePay,
+    required this.firstPlacePercent,
+    required this.secondPlacePercent, 
+    required this.thirdPlacePercent,
   }) {
     _checkInvariants();
   }
 
   void _checkInvariants() {
-    _checkNotNegative(firstPlacePay, 'firstPlacePay');
-    _checkNotNegative(secondPlacePay, 'secondPlacePay');
-    _checkNotNegative(thirdPlacePay, 'thirdPlacePay');
+    _checkNotNegative(firstPlacePercent, 'firstPlacePercent');
+    _checkNotNegative(secondPlacePercent, 'secondPlacePercent');
+    _checkNotNegative(thirdPlacePercent, 'thirdPlacePercent');
 
-    _checkGreaterThan(firstPlacePay, secondPlacePay, 'firstPlacePay', 'secondPlacePay');
+    _checkGreaterThan(firstPlacePercent, secondPlacePercent, 'firstPlacePercent', 'secondPlacePercent');
 
-    if (secondPlacePay != 0 ) {
-      _checkGreaterThan(secondPlacePay, thirdPlacePay,'secondPlacePay', 'thirdPlacePay');
+    if (secondPlacePercent != 0 ) {
+      _checkGreaterThan(secondPlacePercent, thirdPlacePercent,'secondPlacePercent', 'thirdPlacePercent');
     } 
+
+    assert(
+      firstPlacePercent + secondPlacePercent + thirdPlacePercent == 1,
+      'The total of first second and third place percent cut should be equal to 1'
+    ); 
   }
 
   void _checkNotNegative(double val, String variableName) {
@@ -48,4 +53,15 @@ class PodiumDistribution implements MoneyDistribution {
     );
   }
 
+  double winnersPay(double prizePoolDollars) {
+    return prizePoolDollars * firstPlacePercent;
+  }
+
+  double secondPlacePay(double prizePoolDollars) {
+    return prizePoolDollars * secondPlacePercent;
+  }
+
+  double thirdPlacePay(double prizePoolDollars) {
+    return prizePoolDollars * thirdPlacePercent;
+  }
 }

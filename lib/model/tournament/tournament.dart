@@ -1,6 +1,6 @@
 import 'package:pool_shark/model/constants/name_lengths.dart';
-import 'package:pool_shark/model/tournament/phases/knock_out_phase.dart';
-import 'package:pool_shark/model/tournament/phases/round_robin_phase.dart';
+import 'package:pool_shark/model/tournament/phases/knockOutPhase/knock_out_phase.dart';
+import 'package:pool_shark/model/tournament/phases/roundRobinPhase/round_robin_phase.dart';
 import 'package:pool_shark/model/tournament/tournament_settings.dart';
 import 'package:pool_shark/model/user/user.dart';
 import 'package:pool_shark/utils/check_length.dart';
@@ -38,6 +38,4 @@ final class Tournament {
       name, 'tournamentName', NameLengths.tournanmentMin, NameLengths.tournanmentMax
     );
   }
-
-
 }
