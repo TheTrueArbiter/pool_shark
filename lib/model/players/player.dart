@@ -15,6 +15,6 @@ abstract class Player {
   String get nickname;
 
   Rank get rank;
-  Team get team;
+  Team? get team;
 }
 

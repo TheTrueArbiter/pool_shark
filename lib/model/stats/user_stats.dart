@@ -37,7 +37,7 @@ final class UserStats {
 
   void _checkNotNegative(int value, String variableName) {
     assert(
-      value > 0,
+      value >= 0,
       'UserStats: $variableName cannot be negative. Value: $value'
     );
   }

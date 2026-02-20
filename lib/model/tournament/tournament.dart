@@ -14,6 +14,8 @@ final class Tournament {
   final DateTime startDate;
   final DateTime endDate;
 
+  bool isComplete = false;
+
   Tournament({
     required this.name,
     required this.organizer,

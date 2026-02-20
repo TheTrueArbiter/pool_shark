@@ -12,12 +12,11 @@ import 'package:pool_shark/model/team/team.dart';
 
 final class UserPlayer implements Player {
 
-  @override
-  final Team team;
+  final Team? _team = null;
 
   final User user;
 
-  UserPlayer(this.user, this.team);
+  UserPlayer(this.user);
 
   @override 
   String get firstName => user.firstName;  
@@ -33,4 +32,11 @@ final class UserPlayer implements Player {
 
   @override 
   Rank get rank => user.rank; 
+
+  @override 
+  get team => _team;
+
+  set team(Team team) {
+    
+  }
 }

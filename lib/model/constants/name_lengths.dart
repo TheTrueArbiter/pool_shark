@@ -1,4 +1,6 @@
 final class NameLengths {
+
+  // User 
   static const firstNameMin = 1;
   static const firstNameMax = 32;
 
@@ -17,7 +19,13 @@ final class NameLengths {
   static const usernameMin = 3;
   static const usernameMax = 20;
 
+  // Tournament
+
   static const tournanmentMin = 1;
   static const tournanmentMax = 32;
+
+
+  // Group
+  static const groupNameMax = 16;
 
 }

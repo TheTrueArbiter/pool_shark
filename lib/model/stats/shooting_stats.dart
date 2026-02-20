@@ -29,7 +29,7 @@ final class ShootingStats {
   
   void _checkNotNegative(int value, String variableName) {
       assert(
-        value > 0,
+        value >= 0,
         'ShootinStats: $variableName cannot be negative. Value: $value'
       );
   }

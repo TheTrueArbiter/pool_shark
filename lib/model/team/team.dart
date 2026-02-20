@@ -19,13 +19,16 @@ import 'package:pool_shark/model/user/user.dart';
 final class Team {
 
   final String name;
-  final User captain;
+  final User? captain = null;
   final Map<Player, MatchStats> allPlayerStats = {};
-  final List<Player> players = [];
+  final List<Player> players;
   final List<Player> subs = [];
 
-  Team(this.name, this.captain) {
-    // _initAllPlayerStats();
+  Team({
+    required this.name,
+    required this.players
+  }) {
+    _initAllPlayerStats();
     _checkInvariants();
   }
 
@@ -41,16 +44,15 @@ final class Team {
       ''';
   }
 
-  // // _initAllPlayerStats
-  // void _initAllPlayerStats() {
-  //   for (Player p in [...players, ...subs]) {
-  //     User? user = (p is UserPlayer) ? p.user : null;
-  //     MatchStats matchStats = MatchStats(p); 
-  //     allPlayerStats[p] = matchStats;
-  //   }
-  // }
-  //
+  // _initAllPlayerStats
+  void _initAllPlayerStats() {
+    // TODO: this
+  }
+
   void _checkInvariants() {
+
+    assert(players.isNotEmpty, 'A team cannot have any players. Team must have players to be valid');
+
     for (Player p in [...players, ...subs]) {
       assert(
         allPlayerStats[p] != null,
@@ -61,5 +63,7 @@ final class Team {
   }
 
   MatchStats? matchStats(Player player) => allPlayerStats[player];
+
+  // TODO: add way to remove and add subs
 
 }

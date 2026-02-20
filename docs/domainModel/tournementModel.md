@@ -196,27 +196,19 @@ classDiagram
     }
 
     class Group {
-        String name 
-        List<Team> teams 
-        List<Match> matches
-        Scoreboard scoreboard
+        final String name 
+        final List<Team> teams 
+        final List<Match> matches
+        final Scoreboard scoreboard
+
         boolean isComplete
     
-        getName() String 
-        getTeams() List<Team>
-        getScoreboard() ScoreBoard
     }
 
     note for Group "Invariant properties:
-        name != null
         name.lenght >= 1 
-        teams != null
         teams.size >= 2 
-        for each Team in teams != null
-        matches != null
         matches.size >= 1 
-        for each Match in matches != null 
-        scoreboard != null
     "
 
 
@@ -224,7 +216,7 @@ classDiagram
         Map<Team ScoreBoardEntry> entries 
 
         getStandings() List<ScoreBoardEntry>
-        recordMatchResult(Match match) void 
+        recordMatchResult(Team team, Outcome outcome) void 
         
     }
 
@@ -238,18 +230,7 @@ classDiagram
         int matchesPlayed   
         int matchesWon 
         int matchesLost
-        int points
     
-        boolean isDivisionWon
-        boolean isInKnockOut
-
-        getMatchesPlayed() int 
-        getMatchesWon() int  
-        getMatchesLost() int 
-        getPoints() int 
-        getTeam() Team
-        getIsDivisionWon() boolean 
-        getIsInKnockOut() boolean
     } 
     
     note for ScoreboardEntry "Invariant properties:
