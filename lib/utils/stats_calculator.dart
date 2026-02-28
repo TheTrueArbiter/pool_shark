@@ -3,13 +3,13 @@ class StatsCalculator {
 
   static double getRate(int dividend, int divisor) {
     return divisor != 0 
-      ? double.parse((dividend / divisor).toStringAsFixed(decimalPlaces)) * 100 
-      : 100;
+      ? dividend / divisor 
+      : 0;
   }
 
   static double getAverage(int x, int n) {
     return n != 0 
-      ? double.parse((x / n).toStringAsFixed(decimalPlaces)) * 100
+      ? x / n
       : 0;
   }
 

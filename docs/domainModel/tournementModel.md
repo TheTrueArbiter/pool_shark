@@ -125,13 +125,13 @@ classDiagram
         int matchesPerTeam
 
         List<Group> groups
+        List<Team> teams
 
         boolean isComplete
 
         generateMatches() void
 
         getAdvancingTeams() Map<Team <Group, Rank>>
-        getGroups() List<Group>
         getGroup(String groupName) Group 
         getGroup(int index) Group
         getMatchesForTeam(Team team) list<Match>
@@ -141,9 +141,7 @@ classDiagram
         numOfGroups >= 1
         teamsToAdvace >= 1 
         matchesPerTeam >= 1 
-        groups != null 
-        each Group in groups != null 
-        groups.size == numOfGroups
+        teams.length >= 2
     "
 
     class KnockOutPhase {

@@ -80,12 +80,6 @@ void main() {
       // Check for duplicates
       expect(allTeams.length, equals(r.teams.length));
       expect(allTeams.toSet().length, equals(r.teams.length)); 
-
-      
     });
-
-
   });
-
-
 }
