@@ -46,7 +46,9 @@ final class Team {
 
   // _initAllPlayerStats
   void _initAllPlayerStats() {
-    // TODO: this
+    for (Player p in players) {
+      allPlayerStats[p] = MatchStats(p);
+    }
   }
 
   void _checkInvariants() {

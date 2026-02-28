@@ -9,19 +9,19 @@ void main() {
 
       test('addWetBreaks throws when trying to add negative value', () {
         final stats = BreakingStats();
-        expect( () => stats.addWetBreaks(-1), throwsArgumentError);
+        expect( () => stats.addWetBreaks(-1), throwsA(isA<AssertionError>()));
       
       });
 
     test('addDryBreaks throws when trying to add negative value', () {
         final stats = BreakingStats();
-        expect( () => stats.addDryBreaks(-1), throwsArgumentError);
+        expect( () => stats.addDryBreaks(-1), throwsA(isA<AssertionError>()));
       
       });
 
     test('addFoulBreaks throws when trying to add negative value', () {
         final stats = BreakingStats();
-        expect( () => stats.addFoulBreaks(-1), throwsArgumentError);
+        expect( () => stats.addFoulBreaks(-1), throwsA(isA<AssertionError>()));
       });
     });
 
@@ -94,7 +94,7 @@ void main() {
 
       test('dryBreakRate can return 100%', () {
         final stats = BreakingStats();
-        stats.addFoulBreaks(1);
+        stats.addDryBreaks(1);
 
         expect(stats.dryBreakRate, 1);
       });
@@ -109,7 +109,7 @@ void main() {
       test('dryBreakRate handles repeating decimals', () {
         final stats = BreakingStats();
         stats.addDryBreaks(1);
-        stats.addWetBreaks(9);
+        stats.addWetBreaks(8);
 
         expect(stats.dryBreakRate, closeTo(0.11111, 0.0001));
       });

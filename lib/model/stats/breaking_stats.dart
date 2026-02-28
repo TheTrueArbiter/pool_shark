@@ -35,7 +35,7 @@ final class BreakingStats {
 
   void _checkIncrement(int value, String type) {
     assert(
-      value > 0,
+      value >= 0,
       'BreakingStats: Cannot increment $type by negative amount'
     ); 
   }

@@ -144,7 +144,11 @@ class User {
     User user = (matchStats.statsOf as UserPlayer).user; 
     _checkIsSameId(user.id);
 
-    _checkIsUserPlayer(matchStats.opponent);
+
+    for(Player p in matchStats.opponent) {
+      _checkIsUserPlayer(p);
+    }
+
     User opponent = (matchStats.opponent as UserPlayer).user;
 
     HeadToHeadRecord? record = headToHeadRecords[opponent];

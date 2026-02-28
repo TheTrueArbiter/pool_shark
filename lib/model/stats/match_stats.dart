@@ -20,7 +20,7 @@ import 'package:pool_shark/model/players/player.dart';
 
 final class MatchStats {
   final Player statsOf;
-  final Player opponent;
+  List<Player> _opponent = [];
 
   final ShootingStats shootingStats = ShootingStats();
   final BreakingStats breakingStats = BreakingStats();
@@ -32,7 +32,7 @@ final class MatchStats {
 
   int _breakAndRuns = 0;
 
-  MatchStats(this.statsOf, this.opponent) {
+  MatchStats(this.statsOf) {
     checkInvariants();
   }
 
@@ -46,7 +46,7 @@ final class MatchStats {
 
   void _checkNotNegative(int value, String variableName) {
       assert(
-        value > 0,
+        value >= 0,
         'MatchStats: $variableName cannot be negative. Value: $value'
       );
   }
@@ -58,6 +58,8 @@ final class MatchStats {
   int get gamesWon => _gamesWon;
   int get gamesLost => _gamesLost;
 
+  List<Player> get opponent => _opponent;
+
   // Shooting average getters
   double get pottingAverage =>  StatsCalculator.getAverage(shootingStats.potted, gamesPlayed);
   double get missedAverage => StatsCalculator.getAverage(shootingStats.missed, gamesPlayed);
@@ -67,6 +69,18 @@ final class MatchStats {
   // BreakAndRuns getter 
   int get breakAndRuns => _breakAndRuns;
   double get breakAndRunRate => StatsCalculator.getRate(_breakAndRuns, gamesPlayed); 
+
+  // Setters 
+
+  set opponent(List<Player> opponent) {
+    assert(opponent.isNotEmpty, "Cannot set opponent to an empty team");
+    assert(opponent.contains(statsOf), "A player cannot be on both teams");
+
+    _opponent = opponent;
+  }
+
+
+  // Logic
 
   // Update match stats
   // Meant for updateing 1 game at a time of match. This enables the ability 
@@ -91,5 +105,7 @@ final class MatchStats {
     checkInvariants();
 
   } 
+
+
   
 }

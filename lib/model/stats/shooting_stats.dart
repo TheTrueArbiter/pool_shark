@@ -36,7 +36,7 @@ final class ShootingStats {
 
   void _checkAddedValue(int value, String methodName) {
     assert(  
-        value > 0,
+        value >= 0,
         'ShootingStats: Cannot add a negative value for $methodName. value: $value'
       );
   }
