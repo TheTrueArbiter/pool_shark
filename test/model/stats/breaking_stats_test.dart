@@ -142,11 +142,6 @@ void main() {
 
         expect(stats.foulBreakRate, closeTo(0.66666, 0.0001));
       });
-
-
-
-
-
     });
 
   });

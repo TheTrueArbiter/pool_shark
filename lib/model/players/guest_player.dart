@@ -25,10 +25,10 @@ final class GuestPlayer implements Player {
   final String displayName;
 
   @override
-  final Rank rank;
+  final Rank? rank;
 
   @override
-  final Team team;
+  final Team? team;
 
   GuestPlayer({
     required this.firstName,

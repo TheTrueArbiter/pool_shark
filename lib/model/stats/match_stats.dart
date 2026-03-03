@@ -74,11 +74,10 @@ final class MatchStats {
 
   set opponent(List<Player> opponent) {
     assert(opponent.isNotEmpty, "Cannot set opponent to an empty team");
-    assert(opponent.contains(statsOf), "A player cannot be on both teams");
+    assert(!opponent.contains(statsOf), "A player cannot be on both teams");
 
     _opponent = opponent;
   }
-
 
   // Logic
 
@@ -86,6 +85,9 @@ final class MatchStats {
   // Meant for updateing 1 game at a time of match. This enables the ability 
   // to have stats be checked throughout the match
   void updateStats(GameStats gameStats) {
+    assert(gameStats.outcome != Outcome.undecided, 'All games must be complete before upating match stats');
+
+
     ShootingStats gameShootngStats = gameStats.shootingStats;
     
     shootingStats.addPotted(gameShootngStats.potted); 
